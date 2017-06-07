@@ -51,6 +51,9 @@ public class HdfsConfigurationUpdater
     private final Configuration resourcesConfiguration;
     private final HiveCompressionCodec compressionCodec;
     private final int fileSystemMaxCacheSize;
+    private final String fsS3Impl;
+    private final String fsS3aImpl;
+    private final String fsS3nImpl;
 
     private final String s3AwsAccessKey;
     private final String s3AwsSecretKey;
@@ -91,6 +94,9 @@ public class HdfsConfigurationUpdater
         this.resourcesConfiguration = readConfiguration(hiveClientConfig.getResourceConfigFiles());
         this.compressionCodec = hiveClientConfig.getHiveCompressionCodec();
         this.fileSystemMaxCacheSize = hiveClientConfig.getFileSystemMaxCacheSize();
+        this.fsS3Impl = hiveClientConfig.getFsS3Impl();
+        this.fsS3aImpl = hiveClientConfig.getFsS3aImpl();
+        this.fsS3nImpl = hiveClientConfig.getFsS3nImpl();
 
         this.s3AwsAccessKey = s3Config.getS3AwsAccessKey();
         this.s3AwsSecretKey = s3Config.getS3AwsSecretKey();
@@ -159,10 +165,9 @@ public class HdfsConfigurationUpdater
         config.setInt("ipc.client.connect.timeout", toIntExact(dfsConnectTimeout.toMillis()));
         config.setInt("ipc.client.connect.max.retries", dfsConnectMaxRetries);
 
-        // re-map filesystem schemes to match Amazon Elastic MapReduce
-        config.set("fs.s3.impl", PrestoS3FileSystem.class.getName());
-        config.set("fs.s3a.impl", PrestoS3FileSystem.class.getName());
-        config.set("fs.s3n.impl", PrestoS3FileSystem.class.getName());
+        config.set("fs.s3.impl", fsS3Impl);
+        config.set("fs.s3a.impl", fsS3aImpl);
+        config.set("fs.s3n.impl", fsS3nImpl);
 
         // set AWS credentials for S3
         if (s3AwsAccessKey != null) {

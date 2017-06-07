@@ -90,6 +90,9 @@ public class TestHiveClientConfig
                 .setBucketExecutionEnabled(true)
                 .setBucketWritingEnabled(true)
                 .setFileSystemMaxCacheSize(1000)
+                .setFsS3Impl("com.facebook.presto.hive.PrestoS3FileSystem")
+                .setFsS3aImpl("com.facebook.presto.hive.PrestoS3FileSystem")
+                .setFsS3nImpl("com.facebook.presto.hive.PrestoS3FileSystem")
                 .setWritesToNonManagedTablesEnabled(false));
     }
 
@@ -118,6 +121,9 @@ public class TestHiveClientConfig
                 .put("hive.dfs.connect.max-retries", "10")
                 .put("hive.dfs.verify-checksum", "false")
                 .put("hive.dfs.domain-socket-path", "/foo")
+                .put("fs.s3.impl", "org.apache.hadoop.fs.s3.S3FileSystem")
+                .put("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+                .put("fs.s3n.impl", "org.apache.hadoop.fs.s3native.NativeS3FileSystem")
                 .put("hive.config.resources", "/foo.xml,/bar.xml")
                 .put("hive.max-initial-splits", "10")
                 .put("hive.max-initial-split-size", "16MB")
@@ -182,6 +188,9 @@ public class TestHiveClientConfig
                 .setDfsTimeout(new Duration(33, TimeUnit.SECONDS))
                 .setDfsConnectTimeout(new Duration(20, TimeUnit.SECONDS))
                 .setDfsConnectMaxRetries(10)
+                .setFsS3Impl("org.apache.hadoop.fs.s3.S3FileSystem")
+                .setFsS3aImpl("org.apache.hadoop.fs.s3a.S3AFileSystem")
+                .setFsS3nImpl("org.apache.hadoop.fs.s3native.NativeS3FileSystem")
                 .setVerifyChecksum(false)
                 .setResourceConfigFiles(ImmutableList.of("/foo.xml", "/bar.xml"))
                 .setHiveStorageFormat(HiveStorageFormat.SEQUENCEFILE)

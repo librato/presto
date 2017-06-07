@@ -75,6 +75,9 @@ public class HiveClientConfig
     private int dfsConnectMaxRetries = 5;
     private boolean verifyChecksum = true;
     private String domainSocketPath;
+    private String fsS3Impl = PrestoS3FileSystem.class.getName();
+    private String fsS3aImpl = PrestoS3FileSystem.class.getName();
+    private String fsS3nImpl = PrestoS3FileSystem.class.getName();
 
     private HiveStorageFormat hiveStorageFormat = HiveStorageFormat.RCBINARY;
     private HiveCompressionCodec hiveCompressionCodec = HiveCompressionCodec.GZIP;
@@ -885,5 +888,41 @@ public class HiveClientConfig
     public boolean getWritesToNonManagedTablesEnabled()
     {
         return writesToNonManagedTablesEnabled;
+    }
+
+    public String getFsS3Impl()
+    {
+        return fsS3Impl;
+    }
+
+    @Config("fs.s3.impl")
+    public HiveClientConfig setFsS3Impl(String fsS3Impl)
+    {
+        this.fsS3Impl = fsS3Impl;
+        return this;
+    }
+
+    public String getFsS3aImpl()
+    {
+        return fsS3aImpl;
+    }
+
+    @Config("fs.s3a.impl")
+    public HiveClientConfig setFsS3aImpl(String fsS3aImpl)
+    {
+        this.fsS3aImpl = fsS3aImpl;
+        return this;
+    }
+
+    public String getFsS3nImpl()
+    {
+        return fsS3nImpl;
+    }
+
+    @Config("fs.s3n.impl")
+    public HiveClientConfig setFsS3nImpl(String fsS3nImpl)
+    {
+        this.fsS3nImpl = fsS3nImpl;
+        return this;
     }
 }
